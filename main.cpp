@@ -1,11 +1,9 @@
-#include <unistd.h>
 #include <stdio.h>
-#include <fcntl.h>
-#include <sys/ioctl.h>
-#include <linux/i2c-dev.h>
+#include "i2c_driver.h"
 
-int main(int argc, char **argv[])
+
+int main(int argc, char **argv)
 {
-
+    printf("\nSmart Home\n");
     return 0;
 }

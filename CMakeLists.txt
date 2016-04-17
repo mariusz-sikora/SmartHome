@@ -54,12 +54,27 @@ target_link_libraries(
     pthread
     )
 
-if(CMAKE_BUILD_TYPE MATCHES Prod)
+if(PRODUCTION_BUILD MATCHES Prod)
     message("Production build")
-    
+
+    if(ARCH_TYPE MATCHES Linux_Rpi)
+        message("ARCH = Linux_Rpi")
+ 
+        set(ARCH
+            arch/linux_Rpi/
+            )
+
+        include_directories(
+            arch/linux_Rpi
+            )
+    else()
+        message("Lack of ARCH specified")
+    endif()
+
     add_executable(
         SmartHomeMain
         main.cpp
+        ${ARCH}/i2c_driver.cpp
         )
 else()
     message("Test build")
