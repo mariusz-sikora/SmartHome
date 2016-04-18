@@ -5,7 +5,7 @@ project(smart_home)
 enable_language(C CXX)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES GNU)
-    set(CMAKE_CXX_FLAGS         "-Wall -Wno-unknown-pragmas -Wno-sign-compare -Woverloaded-virtual -Wwrite-strings -Wno-unused")
+    set(CMAKE_CXX_FLAGS         "-Wall -Wno-unknown-pragmas -Wno-sign-compare -Woverloaded-virtual -Wwrite-strings -Wno-unused -std=c++0x")
     set(CMAKE_CXX_FLAGS_DEBUG   "-O0 -g3")
     set(CMAKE_CXX_FLAGS_RELEASE "-O3")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
@@ -13,8 +13,15 @@ endif()
 
 include_directories(
     ${PROJECT_SOURCE_DIR}/src
+    ${PROJECT_SOURCE_DIR}/src/drivers
     )
 
+add_library(
+    SmartHomeLib
+    src/drivers/I2C.cpp
+    )
+
+#This should be remove !!
 add_library(
     example
     src/example.cpp
@@ -51,6 +58,7 @@ target_link_libraries(
     unit_tests
     googletest
     example
+    SmartHomeLib
     pthread
     )
 
@@ -75,6 +83,11 @@ if(PRODUCTION_BUILD MATCHES Prod)
         SmartHomeMain
         main.cpp
         ${ARCH}/i2c_driver.cpp
+        )
+
+    target_link_libraries(
+        SmartHomeMain
+        SmartHomeLib
         )
 else()
     message("Test build")
