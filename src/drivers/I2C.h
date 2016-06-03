@@ -24,21 +24,25 @@ class I2C
 {
 public:
     static std::unique_ptr<I2C> CreateDriverI2C(
-            OpenDriverI2C  open,
-            CloseDriverI2C close,
-            SendDriverI2C  send,
-            ReadDriverI2C  read);
+            const char *filename,
+            const OpenDriverI2C  open,
+            const CloseDriverI2C close,
+            const SendDriverI2C  send,
+            const ReadDriverI2C  read);
+
+    ~I2C();
 
 private:
-    I2C(OpenDriverI2C  open,
-        CloseDriverI2C close,
-        SendDriverI2C  send,
-        ReadDriverI2C  read);
+    I2C(const OpenDriverI2C  open,
+        const CloseDriverI2C close,
+        const SendDriverI2C  send,
+        const ReadDriverI2C  read);
 
-    OpenDriverI2C  open;
-    CloseDriverI2C close;
-    SendDriverI2C  send;
-    ReadDriverI2C  read;
+    int handle;
+    const OpenDriverI2C  open;
+    const CloseDriverI2C close;
+    const SendDriverI2C  send;
+    const ReadDriverI2C  read;
 
 };
 

@@ -49,6 +49,7 @@ add_library(googletest ${GOOGLETEST_SOURCES})
 add_executable(
     unit_tests
     test/main.cpp
+    test/drivers/test_I2c.cpp
     test/example_add.cpp
     )
 
